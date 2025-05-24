@@ -7,7 +7,6 @@ interface Message {
   id: string;
   content: string;
   isUser: boolean;
-  timestamp: Date;
 }
 
 interface Tag {
@@ -19,7 +18,6 @@ interface ChatContextType {
   isLoading: boolean;
   tags: Tag[];
   sendMessage: (content: string) => Promise<void>;
-  sendFieldData: (fieldName: string, data: any) => Promise<void>;
   addTag: (text: string) => void;
   removeTag: (tagId: string) => void;
   scrollToBottom: () => void;
@@ -62,13 +60,13 @@ export function ChatProvider({ children }: ChatProviderProps) {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: content.trim(),
       isUser: true,
-      timestamp: new Date(),
+      content: tags.map(tag => '@' + tag.text).join(' ') + ' ' + content.trim(),
     };
 
     setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
+    setTags([]);
 
     try {
       const response = await apiClient.post('/api/chat', {
@@ -80,15 +78,10 @@ export function ChatProvider({ children }: ChatProviderProps) {
         id: (Date.now() + 1).toString(),
         content: response.message,
         isUser: false,
-        timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, botMessage]);
 
-      // Update progress if step is provided in response
-      if (response.step) {
-        onProgressUpdate(response.step);
-      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
@@ -103,17 +96,11 @@ export function ChatProvider({ children }: ChatProviderProps) {
     }
   };
 
-  const sendFieldData = async (fieldName: string, data: any) => {
-    const message = `@${fieldName}: ${JSON.stringify(data, null, 2)}`;
-    await sendMessage(message);
-  };
-
   const value = {
     messages,
     isLoading,
     tags,
     sendMessage,
-    sendFieldData,
     addTag,
     removeTag,
     scrollToBottom,

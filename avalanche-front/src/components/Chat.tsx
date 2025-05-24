@@ -8,7 +8,7 @@ import ChatMessage from './ChatMessage';
 export default function Chat() {
   const [input, setInput] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const { messages, isLoading, tags, sendMessage, addTag, removeTag, messagesEndRef } = useChat();
+  const { messages, isLoading, tags, sendMessage, removeTag, messagesEndRef } = useChat();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,10 +22,6 @@ export default function Chat() {
     sendMessage(question);
   };
 
-  const handleAskAI = () => {
-    // Instead of sending message, add a tag
-    addTag("@VM ID", { type: "vm_id", value: "example_vm_123" });
-  };
 
   return (
     <div className="flex flex-col h-full bg-black">
