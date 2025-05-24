@@ -1,24 +1,39 @@
 export enum BlockType {
   INPUT = 'input',
-  RADIO = 'radio'
+  RADIO = 'radio',
+  BUTTON = 'button'
 }
 
 export interface InputBlock {
   type: BlockType.INPUT;
   heading: string;
   placeholder: string;
+  description?: string;
+  canAskAI?: boolean;
 }
 
 export interface RadioBlock {
   type: BlockType.RADIO;
   options: string[];
+  description?: string;
+  canAskAI?: boolean;
 }
 
-export type Block = InputBlock | RadioBlock;
+export interface ButtonBlock {
+  type: BlockType.BUTTON;
+  name: string;
+  value: string;
+  description?: string;
+  canAskAI?: boolean;
+}
+
+export type Block = InputBlock | RadioBlock | ButtonBlock;
 
 export interface SubStep {
   name: string;
   blocks: Block[];
+  description?: string;
+  canAskAI?: boolean;
 }
 
 export interface Step {

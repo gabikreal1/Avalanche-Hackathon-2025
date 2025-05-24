@@ -11,6 +11,11 @@ export const steps = [
               heading: "Subnet Owner",
               placeholder: "P-avax16g4racxztww72ac5t2h5x5ywzf20jrcgvr8haw"
             },
+            {
+              type: BlockType.BUTTON,
+              name: "Generate Subnet",
+              value: "GENERATE_SUBNET"
+            }
           ]
         },
         {
@@ -29,8 +34,15 @@ export const steps = [
             {
               type: BlockType.INPUT,
               heading: "VM ID",
-              placeholder: "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy"
+              placeholder: "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
+              description: "For an L1 with an uncustomized EVM use srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
+              canAskAI: true
             },
+            {
+              type: BlockType.BUTTON,
+              name: "Create Chain",
+              value: "CREATE_CHAIN"
+            }
           ]
         }
       ]
@@ -45,6 +57,11 @@ export const steps = [
               heading: "EVM Chain ID",
               placeholder: "34257"
             },
+            {
+              type: BlockType.BUTTON,
+              name: "Validate Parameters",
+              value: "VALIDATE_PARAMETERS"
+            }
           ]
         },
       ]

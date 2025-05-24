@@ -1,90 +1,30 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { apiClient } from '@/lib/apiClient';
+import { useState } from 'react';
+import { useChat } from '@/contexts/ChatContext';
 import SuggestedQuestions from './SuggestedQuestions';
 import ChatMessage from './ChatMessage';
 
-interface Message {
-  id: string;
-  content: string;
-  isUser: boolean;
-  timestamp: Date;
-}
-
-interface ChatProps {
-  onProgressUpdate: (step: number) => void;
-}
-
-export default function Chat({ onProgressUpdate }: ChatProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+export default function Chat() {
   const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const sendMessage = async (content: string) => {
-    if (!content.trim() || isLoading) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: content.trim(),
-      isUser: true,
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setIsLoading(true);
-
-    try {
-      const response = await apiClient.post('/api/chat', {
-        message: content.trim(),
-        history: messages,
-      });
-
-      const botMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: response.message,
-        isUser: false,
-        timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, botMessage]);
-
-      // Update progress if step is provided in response
-      if (response.step) {
-        onProgressUpdate(response.step);
-      }
-    } catch (error) {
-      console.error('Error sending message:', error);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: 'Sorry, something went wrong. Please try again.',
-        isUser: false,
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { messages, isLoading, tags, sendMessage, addTag, removeTag, messagesEndRef } = useChat();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    sendMessage(input);
+    if (input.trim()) {
+      sendMessage(input);
+      setInput('');
+    }
   };
 
   const handleSuggestedQuestion = (question: string) => {
     sendMessage(question);
+  };
+
+  const handleAskAI = () => {
+    // Instead of sending message, add a tag
+    addTag("@VM ID", { type: "vm_id", value: "example_vm_123" });
   };
 
   return (
@@ -132,6 +72,15 @@ export default function Chat({ onProgressUpdate }: ChatProps) {
           <div className={`flex items-center border rounded-3xl px-4 py-2 transition-colors duration-200 ${
             isFocused ? 'border-[#ff394a]' : 'border-gray-300'
           }`}>
+            <div className="flex gap-2 mr-2">
+              {tags.map((tag) => (
+                <Tag 
+                  key={tag.id}
+                  text={tag.text} 
+                  onRemove={() => removeTag(tag.id)} 
+                />
+              ))}
+            </div>
             <input
               type="text"
               value={input}
@@ -142,6 +91,7 @@ export default function Chat({ onProgressUpdate }: ChatProps) {
               className="flex-1 bg-transparent border-none placeholder:pl-1 outline-none text-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-2 py-4"
               disabled={isLoading}
             />
+            
             <button
               type="submit"
               disabled={isLoading || !input.trim()}
@@ -166,4 +116,18 @@ export default function Chat({ onProgressUpdate }: ChatProps) {
       </div>
     </div>
   );
+}
+
+const Tag = ({text, onRemove}: {text: string, onRemove: () => void}) => {
+  return (
+    <span className="relative inline-flex items-center px-2.5 py-0.5 rounded-lg text-lg font-medium bg-[#ff394a] text-white">
+      {text}
+      <button 
+        onClick={onRemove} 
+        className="ml-2 w-4 h-4 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center text-xs font-bold transition-colors duration-200"
+      >
+        ×
+      </button>
+    </span>
+  )
 }
