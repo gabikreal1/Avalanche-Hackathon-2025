@@ -153,7 +153,7 @@ def build_chain() -> None:
     llm = ChatOpenAI(
         model_name="gpt-3.5-turbo",        # or any other supported model
         # temperature=0.25,
-        openai_api_key="<your key>",
+        openai_api_key="<OA_key>",
     )
     
     base_parser = StructuredOutputParser.from_response_schemas(schemas)
