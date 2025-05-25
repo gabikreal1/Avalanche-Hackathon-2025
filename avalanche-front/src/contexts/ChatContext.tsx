@@ -9,6 +9,7 @@ interface Message {
   id: string;
   content: string;
   isUser: boolean;
+  timestamp: Date;
 }
 
 interface Tag {
@@ -37,7 +38,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState<Tag[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const {setManyBlockValues} = useBlock()
+  const { formData, setManyBlockValues } = useBlock();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -55,18 +56,60 @@ export function ChatProvider({ children }: ChatProviderProps) {
   };
 
   const removeTag = (tagId: string) => {
-    setTags(prev => prev.filter(tag => tag.id !== tagId));
+    setTags(prev => prev.filter(tag => tag.text !== tagId));
+  };
+
+  // Build chat history string from messages
+  const buildChatHistory = () => {
+    return messages.map(msg => 
+      `${msg.isUser ? 'User' : 'Bot'}: ${msg.content}`
+    ).join('\n');
+  };
+
+  // Convert flat formData to nested user_config structure
+  const buildUserConfig = () => {
+    const config: any = {};
+    
+    // Group related fields into nested objects
+    Object.entries(formData).forEach(([key, value]) => {
+      if (key.startsWith('feeConfig.')) {
+        if (!config.feeConfig) config.feeConfig = {};
+        const subKey = key.replace('feeConfig.', '');
+        config.feeConfig[subKey] = value;
+      } else if (key.startsWith('warpConfig.')) {
+        if (!config.warpConfig) config.warpConfig = {};
+        const subKey = key.replace('warpConfig.', '');
+        config.warpConfig[subKey] = value;
+      } else if (key.startsWith('contractDeployerAllowListConfig.')) {
+        if (!config.contractDeployerAllowListConfig) config.contractDeployerAllowListConfig = {};
+        const subKey = key.replace('contractDeployerAllowListConfig.', '');
+        config.contractDeployerAllowListConfig[subKey] = value;
+      } else if (key.startsWith('contractNativeMinterConfig.')) {
+        if (!config.contractNativeMinterConfig) config.contractNativeMinterConfig = {};
+        const subKey = key.replace('contractNativeMinterConfig.', '');
+        config.contractNativeMinterConfig[subKey] = value;
+      } else if (key.startsWith('txAllowListConfig.')) {
+        if (!config.txAllowListConfig) config.txAllowListConfig = {};
+        const subKey = key.replace('txAllowListConfig.', '');
+        config.txAllowListConfig[subKey] = value;
+      } else {
+        config[key] = value;
+      }
+    });
+
+    return config;
   };
 
   const sendMessage = async (content: string) => {
     if (!content.trim() || isLoading) return;
 
-    const message = tags.map(tag => '@' + tag.text).join(' ') + ' ' + content.trim()
+    const message = tags.map(tag => '@' + tag.text).join(' ') + ' ' + content.trim();
 
     const userMessage: Message = {
       id: Date.now().toString(),
       isUser: true,
       content: message,
+      timestamp: new Date(),
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -74,31 +117,33 @@ export function ChatProvider({ children }: ChatProviderProps) {
     setTags([]);
 
     try {
-      // const response = await apiClient.post<{ message: string }>('/message', {
-      //   message: message,
-      // });
-      const response = {
-        message: `"A JSON *merge-patch* object (RFC 7396) that includes ONLY the "
-            "paths and values that must change in the subnet config. "
-            "If no change is required, use an empty object {}."`,
-        updates: {
-          "feeConfig": {
-            "subnetOwner": "P-avax16g",
-            "chainName": "MyChain",
-            "vmId": "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
-          }
-        }
+      // Build the payload according to the API structure
+      const payload = {
+        chat_history: buildChatHistory(),
+        user_config: buildUserConfig(),
+        question: message
+      };
+
+      console.log('Sending payload to API:', payload);
+
+      // Send request to the chat endpoint
+      const response = await apiClient.post<{ reply: string; update: Record<string, any> }>('/chat', payload);
+
+      console.log('API response:', response);
+
+      // Parse and apply the updates to block context
+      if (response.update && Object.keys(response.update).length > 0) {
+        const parsedMessage = parseMessage(response.update);
+        console.log('Parsed message:', parsedMessage);
+        setManyBlockValues(parsedMessage);
       }
 
-
-      const parsedMessage = parseMessage(response.updates);
-      console.log('Parsed message:', parsedMessage);
-      setManyBlockValues(parsedMessage);
-
+      // Add bot response to messages
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: response.message,
+        content: response.reply,
         isUser: false,
+        timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, botMessage]);
@@ -109,6 +154,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
         id: (Date.now() + 1).toString(),
         content: 'Sorry, something went wrong. Please try again.',
         isUser: false,
+        timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
