@@ -1,0 +1,13 @@
+# Environment variables for Avalanche Frontend with Core Wallet
+
+# Avalanche RPC URLs (optional - using defaults)
+NEXT_PUBLIC_AVALANCHE_RPC=https://api.avax.network/ext/bc/C/rpc
+NEXT_PUBLIC_AVALANCHE_FUJI_RPC=https://api.avax-test.network/ext/bc/C/rpc
+
+# Contract Addresses (replace with actual deployed contract addresses)
+NEXT_PUBLIC_SUBNET_FACTORY_FUJI=0x...
+NEXT_PUBLIC_SUBNET_FACTORY_MAINNET=0x...
+
+# App Configuration
+NEXT_PUBLIC_APP_NAME=Avalanche Frontend
+NEXT_PUBLIC_APP_DESCRIPTION=Avalanche Subnet and Chain Creation Tool 

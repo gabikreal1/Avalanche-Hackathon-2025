@@ -2,6 +2,7 @@
 
 import { useSteps } from '@/contexts/StepsContext';
 import { StepWrapper } from '@/components/steps/StepWrapper';
+import { WalletButton } from '@/components/wallet/WalletButton';
 
 interface ControlPanelProps {
   progress: number;
@@ -15,6 +16,11 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
 
   return (
     <div className="bg-[#1c1b22] border border-[#2a2830] rounded-lg p-6 h-full flex flex-col">
+      {/* Wallet Button */}
+      <div className="mb-6">
+        <WalletButton />
+      </div>
+
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-xl font-bold text-white mb-2">Trading Steps</h2>
@@ -33,7 +39,7 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
       </div>
 
       {/* Current Step Display using StepWrapper */}
-      <div className="h-[calc(100vh-500px)] overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#2a2830] hover:scrollbar-thumb-[#363540]">
+      <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#2a2830] hover:scrollbar-thumb-[#363540] mb-4">
         {currentStep && (
           <StepWrapper 
             step={currentStep}
@@ -43,7 +49,7 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
       </div>
 
       {/* Navigation buttons */}
-      <div className="flex justify-between items-center pt-4 border-t border-gray-700 mb-4">
+      <div className="flex justify-between items-center pt-4 border-t border-gray-700">
         <button
           onClick={previousStep}
           disabled={!canGoPrevious}
