@@ -46,7 +46,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
 
   const addTag = (text: string) => {
     const newTag: Tag = {
-      text,
+      text: text.replace(" ", "_"),
     };
     setTags(prev => [...prev, newTag]);
   };
@@ -58,10 +58,12 @@ export function ChatProvider({ children }: ChatProviderProps) {
   const sendMessage = async (content: string) => {
     if (!content.trim() || isLoading) return;
 
+    const message = tags.map(tag => '@' + tag.text).join(' ') + ' ' + content.trim()
+
     const userMessage: Message = {
       id: Date.now().toString(),
       isUser: true,
-      content: tags.map(tag => '@' + tag.text).join(' ') + ' ' + content.trim(),
+      content: message,
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -69,9 +71,8 @@ export function ChatProvider({ children }: ChatProviderProps) {
     setTags([]);
 
     try {
-      const response = await apiClient.post('/api/chat', {
-        message: content.trim(),
-        history: messages,
+      const response = await apiClient.post<{ message: string }>('/message', {
+        message: message,
       });
 
       const botMessage: Message = {
@@ -88,7 +89,6 @@ export function ChatProvider({ children }: ChatProviderProps) {
         id: (Date.now() + 1).toString(),
         content: 'Sorry, something went wrong. Please try again.',
         isUser: false,
-        timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {

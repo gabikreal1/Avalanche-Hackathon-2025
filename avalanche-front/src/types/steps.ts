@@ -10,6 +10,7 @@ export interface InputBlock {
   placeholder: string;
   description?: string;
   canAskAI?: boolean;
+  key: string;
 }
 
 export interface RadioBlock {
@@ -17,6 +18,7 @@ export interface RadioBlock {
   options: string[];
   description?: string;
   canAskAI?: boolean;
+  key: string;
 }
 
 export interface ButtonBlock {

@@ -22,6 +22,16 @@ export default function Chat() {
     sendMessage(question);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (input.trim()) {
+        sendMessage(input);
+        setInput('');
+      }
+    }
+  };
+
 
   return (
     <div className="flex flex-col h-full bg-black">
@@ -83,6 +93,7 @@ export default function Chat() {
               onChange={(e) => setInput(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
+              onKeyDown={handleKeyDown}
               placeholder="Ask me anything about trading..."
               className="flex-1 bg-transparent border-none placeholder:pl-1 outline-none text-xl text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 px-2 py-4"
               disabled={isLoading}

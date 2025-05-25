@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, ReactNode } from 'react';
+import { useBlock } from './BlockContext';
 
 export enum ButtonAction {
   GENERATE_SUBNET = 'GENERATE_SUBNET',
@@ -19,15 +20,17 @@ interface ButtonHandlerProviderProps {
 }
 
 export const ButtonHandlerProvider: React.FC<ButtonHandlerProviderProps> = ({ children }) => {
+  const {setBlockValue} = useBlock()
+
   const handleButtonClick = (action: ButtonAction) => {
     switch (action) {
       case ButtonAction.GENERATE_SUBNET:
-        console.log('Generating subnet...');
+        setBlockValue("subnetOwner","value")
         // Add your subnet generation logic here
         break;
         
       case ButtonAction.CREATE_CHAIN:
-        console.log('Creating chain...');
+        setBlockValue("chainOwner","value")
         // Add your chain creation logic here
         break;
         

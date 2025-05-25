@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { Step } from '@/types/steps';
 import { BlockRenderer } from '@/components/blocks/BlockRenderer';
 import { useChat } from '@/contexts/ChatContext';
 import { useButtonHandler } from '@/contexts/ButtonHandlerContext';
+import { useBlock } from '@/contexts/BlockContext';
 
 interface StepWrapperProps {
   step: Step;
@@ -12,21 +12,12 @@ interface StepWrapperProps {
 }
 
 export const StepWrapper = ({ step, stepIndex }: StepWrapperProps) => {
-  const [formData, setFormData] = useState<Record<string, any>>({});
   const { addTag } = useChat();
   const { handleButtonClick } = useButtonHandler();
+  const { setBlockValue, getBlockValue } = useBlock();
 
-  const handleBlockChange = (subStepIndex: number, blockIndex: number, value: any) => {
-    const key = `${stepIndex}-${subStepIndex}-${blockIndex}`;
-    setFormData(prev => ({
-      ...prev,
-      [key]: value
-    }));
-  };
-
-  const getBlockValue = (subStepIndex: number, blockIndex: number) => {
-    const key = `${stepIndex}-${subStepIndex}-${blockIndex}`;
-    return formData[key];
+  const handleBlockChange = (key: string, value: string) => {
+    setBlockValue(key, value);
   };
 
   const onAskAI = (fieldName: string) => {
@@ -49,8 +40,8 @@ export const StepWrapper = ({ step, stepIndex }: StepWrapperProps) => {
                 key={blockIndex}
                 block={block}
                 blockIndex={blockIndex}
-                values={getBlockValue(subStepIndex, blockIndex)}
-                onChange={(blockIndex, value) => handleBlockChange(subStepIndex, blockIndex, value)}
+                values={getBlockValue(block.key)}
+                onChange={(blockIndex, value) => handleBlockChange(block.key, value)}
                 onAskAI={onAskAI}
                 onButtonClick={handleButtonClick}
               />

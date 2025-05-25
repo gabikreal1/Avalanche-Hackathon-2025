@@ -101,13 +101,6 @@ class ApiClient {
     return this.request<T>(endpoint, { ...options, method: 'DELETE' });
   }
 
-  setAuthToken(token: string) {
-    this.defaultHeaders['Authorization'] = `Bearer ${token}`;
-  }
-
-  removeAuthToken() {
-    delete this.defaultHeaders['Authorization'];
-  }
 }
 
-export const apiClient = new ApiClient();
+export const apiClient = new ApiClient('http://localhost:8000'); // Replace with your actual backend URL

@@ -1,6 +1,7 @@
-import { BlockType } from "@/types/steps";
+import { ButtonAction } from "@/contexts/ButtonHandlerContext";
+import { BlockType, Step } from "@/types/steps";
 
-export const steps = [
+export const steps: Step[] = [
     {
       substeps: [
         {
@@ -9,12 +10,13 @@ export const steps = [
             {
               type: BlockType.INPUT,
               heading: "Subnet Owner",
-              placeholder: "P-avax16g4racxztww72ac5t2h5x5ywzf20jrcgvr8haw"
+              placeholder: "P-avax16g4racxztww72ac5t2h5x5ywzf20jrcgvr8haw",
+              key: "subnetOwner",
             },
             {
               type: BlockType.BUTTON,
               name: "Generate Subnet",
-              value: "GENERATE_SUBNET"
+              value: ButtonAction.GENERATE_SUBNET,
             }
           ]
         },
@@ -24,24 +26,27 @@ export const steps = [
             {
               type: BlockType.INPUT,
               heading: "Subnet ID",
-              placeholder: "Create a Subnet in Step 1 or enter a SubnetID"
+              placeholder: "Create a Subnet in Step 1 or enter a SubnetID",
+              key: "subnetId",
             },
             {
               type: BlockType.INPUT,
               heading: "Chain Name",
-              placeholder: "Enter chain name"
+              placeholder: "Enter chain name",
+              key: "chainName",
             },
             {
               type: BlockType.INPUT,
               heading: "VM ID",
               placeholder: "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
               description: "For an L1 with an uncustomized EVM use srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
-              canAskAI: true
+              canAskAI: true,
+              key: "vmId",
             },
             {
               type: BlockType.BUTTON,
               name: "Create Chain",
-              value: "CREATE_CHAIN"
+              value: ButtonAction.CREATE_CHAIN,
             }
           ]
         }
@@ -55,7 +60,8 @@ export const steps = [
             {
               type: BlockType.INPUT,
               heading: "EVM Chain ID",
-              placeholder: "34257"
+              placeholder: "34257",
+              key: "evmChainId",
             },
             {
               type: BlockType.BUTTON,
@@ -74,6 +80,7 @@ export const steps = [
             {
               type: BlockType.RADIO,
               options: ["Anyone can deploy contracts.", "Only approved addresses can deploy contracts."],
+              key: "permissions",
             },
           ]
         },
@@ -87,7 +94,8 @@ export const steps = [
             {
               type: BlockType.INPUT,
               heading: "Amount",
-              placeholder: "10000"
+              placeholder: "10000",
+              key: "amount",
             },
           ]
         },
@@ -101,42 +109,50 @@ export const steps = [
             {
               type: BlockType.INPUT,
               heading: "Gas Limit",
-              placeholder: "15000000"
+              placeholder: "15000000",
+              key: "gasLimit",
             },
             {
               type: BlockType.INPUT,
               heading: "Target Block Rate (seconds)",
-              placeholder: "2"
+              placeholder: "2",
+              key: "targetBlockRate",
             },
             {
               type: BlockType.INPUT,
               heading: "Min Base Fee (gwei)",
-              placeholder: "25"
+              placeholder: "25",
+              key: "minBaseFee",
             },
             {
               type: BlockType.INPUT,
               heading: "Base Fee Change Denominator",
-              placeholder: "48"
+              placeholder: "48",
+              key: "baseFeeChangeDenominator",
             },
             {
               type: BlockType.INPUT,
               heading: "Min Block Gas Cost",
-              placeholder: "0"
+              placeholder: "0",
+              key: "minBlockGasCost",
             },
             {
               type: BlockType.INPUT,
               heading: "Max Block Gas Cost",
-              placeholder: "1000000"
+              placeholder: "1000000",
+              key: "maxBlockGasCost",
             },
             {
               type: BlockType.INPUT,
               heading: "Block Gas Cost Step",
-              placeholder: "200000"
+              placeholder: "200000",
+              key: "blockGasCostStep",
             },
             {
               type: BlockType.INPUT,
               heading: "Target Gas",
-              placeholder: "15000000"
+              placeholder: "15000000",
+              key: "targetGas",
             },
           ]
         },
