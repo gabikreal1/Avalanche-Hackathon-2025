@@ -1,6 +1,7 @@
 'use client';
 
 import { StepWrapper } from '@/components/steps/StepWrapper';
+import { WalletButton } from '@/components/wallet/WalletButton';
 import { useSteps } from '@/contexts/StepsContext';
 
 interface ControlPanelProps {
@@ -14,7 +15,12 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
   const currentStep = steps[currentStepIndex];
 
   return (
-    <div className="bg-[#1c1b22] border border-[#2a2830] rounded-lg p-6 h-full flex flex-col relative">
+    <div className="bg-[#1c1b22] border border-[#2a2830] rounded-lg p-6 h-full flex flex-col">
+      {/* Wallet Button */}
+      <div className="mb-6">
+        <WalletButton />
+      </div>
+
       {/* Header */}
       <div className="mb-6">
         <h2 className="text-xl font-bold text-white mb-2">Trading Steps</h2>
@@ -33,7 +39,7 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
       </div>
 
       {/* Current Step Display using StepWrapper */}
-      <div className="flex-1 overflow-y-auto pr-2 pb-20 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#2a2830] hover:scrollbar-thumb-[#363540]">
+      <div className="flex-1 overflow-y-auto pr-2 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-[#2a2830] hover:scrollbar-thumb-[#363540] mb-4">
         {currentStep && (
           <StepWrapper 
             step={currentStep}
@@ -42,8 +48,8 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
         )}
       </div>
 
-      {/* Navigation buttons - positioned at bottom */}
-      <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center p-6 border-t border-gray-700 bg-[#1c1b22]">
+      {/* Navigation buttons */}
+      <div className="flex justify-between items-center pt-4 border-t border-gray-700">
         <button
           onClick={previousStep}
           disabled={!canGoPrevious}
