@@ -4,6 +4,7 @@ import React, { createContext, useContext, ReactNode } from 'react';
 import { useWallet } from './WalletContext';
 import { useWalletValidation } from '@/hooks/useWalletValidation';
 import { coreWalletMultiChain } from '@/lib/avalanche-multichain';
+import { useBlock } from './BlockContext';
 
 export enum ButtonAction {
   GENERATE_SUBNET = 'GENERATE_SUBNET',
@@ -37,6 +38,7 @@ export const ButtonHandlerProvider: React.FC<ButtonHandlerProviderProps> = ({ ch
   } = useWallet();
   const { canProceedWithAction, getValidationForAction } = useWalletValidation();
   const [isProcessing, setIsProcessing] = React.useState(false);
+  const {setBlockValue} = useBlock()
 
   const handleButtonClick = async (action: ButtonAction) => {
     setIsProcessing(true);
@@ -90,6 +92,7 @@ export const ButtonHandlerProvider: React.FC<ButtonHandlerProviderProps> = ({ ch
             network: isAvalancheNetwork 
           });
           await generateSubnet();
+          setBlockValue("subnetId", "0x8a7f23e1bc9ad4dff1c7be334bb7e3a7e5ac0f0b992d4df1b8e4e2f842f3d1c2")
           break;
           
         case ButtonAction.CREATE_CHAIN:

@@ -146,8 +146,8 @@ export const useBlock = () => {
 };
 
 const configDefault = {
-  "subnetId": "string", // The unique identifier of the Subnet where this blockchain will reside.
-  "vmId": "string", // The unique identifier of the Virtual Machine (VM) to be used, e.g., Subnet-EVM.
+  "subnetId": "2g7FSEfznHtyHuLmTqpB5WGD9mPM5NG4dvzhjZCjRcx1QAToNe", // The unique identifier of the Subnet where this blockchain will reside.
+  "vmId": "12352", // The unique identifier of the Virtual Machine (VM) to be used, e.g., Subnet-EVM.
   "evmChainId": 12345, // (number) The Chain ID for the EVM, used to prevent replay attacks.
   "gasLimit": 8000000, // (number) The maximum amount of gas allowed per block.
   "targetBlockRate": 2, // (number) Desired time (in seconds) between blocks.
