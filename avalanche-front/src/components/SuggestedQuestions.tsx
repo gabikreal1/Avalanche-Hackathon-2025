@@ -4,9 +4,9 @@ interface SuggestedQuestionsProps {
 
 export default function SuggestedQuestions({ onQuestionSelect }: SuggestedQuestionsProps) {
   const questions = [
-    "What is the difference between stop loss and take profit?",
-    "How do I manage risk in trading?",
-    "What are the basic trading strategies for beginners?"
+    "How do I configure gas fees for my L1 blockchain?",
+    "What are the best practices for setting up validator requirements?",
+    "How do I enable contract deployer allow lists for my subnet?"
   ];
 
   return (

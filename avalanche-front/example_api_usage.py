@@ -15,7 +15,8 @@ def test_chat_api():
     
     # Sample subnet configuration (matches the TypeScript interface)
     sample_config = {
-        "subnetId": "test-subnet-123",
+        "subnetId": "subnet_1735689600000_abc123def",
+        "subnetOwner": "P-fuji1x7rz8ef5r3qjh0qzx8z9x7rz8ef5r3qjh0qzx8",
         "vmId": "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
         "evmChainId": 43114,
         "gasLimit": 8000000,
@@ -63,10 +64,10 @@ def test_chat_api():
     
     # Test questions
     test_questions = [
-        "How do I set up a custom gas fee configuration?",
-        "What's the recommended gas limit for a high-throughput subnet?",
-        "How do I enable the contract deployer allow list?",
-        "What are the best practices for fee manager configuration?"
+        "How do I configure gas fees for my L1 blockchain?",
+        "What are the best practices for setting up validator requirements?",
+        "How do I enable contract deployer allow lists for my subnet?",
+        "What should I consider when setting the target block rate for an L1?"
     ]
     
     for question in test_questions:
@@ -116,7 +117,7 @@ def test_chat_api():
 def validate_config_structure(config):
     """Validate that the configuration matches the expected structure."""
     required_fields = [
-        'subnetId', 'vmId', 'evmChainId', 'gasLimit', 'targetBlockRate',
+        'subnetId', 'subnetOwner', 'vmId', 'evmChainId', 'gasLimit', 'targetBlockRate',
         'tokenAllocations', 'feeConfig', 'contractDeployerAllowListConfig',
         'contractNativeMinterConfig', 'txAllowListConfig', 'feeManagerEnabled',
         'feeManagerAdmins', 'rewardManagerEnabled', 'rewardManagerAdmins'

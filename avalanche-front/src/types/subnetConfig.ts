@@ -21,6 +21,7 @@ export interface AllowListConfig {
 
 export interface SubnetConfig {
   subnetId: string;
+  subnetOwner: string;
   vmId: string;
   evmChainId: number;
   gasLimit: number;

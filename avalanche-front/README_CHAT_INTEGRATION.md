@@ -26,6 +26,7 @@ The system handles the following JSON structure:
 ```json
 {
   "subnetId": "string",
+  "subnetOwner": "string",
   "vmId": "string",
   "evmChainId": "number",
   "gasLimit": "number",
@@ -166,6 +167,7 @@ The system maps flattened form fields to the nested structure:
 | Flattened Field | JSON Path |
 |----------------|-----------|
 | `subnetId` | `subnetId` |
+| `subnetOwner` | `subnetOwner` |
 | `vmId` | `vmId` |
 | `evmChainId` | `evmChainId` |
 | `gasLimit` | `gasLimit` |

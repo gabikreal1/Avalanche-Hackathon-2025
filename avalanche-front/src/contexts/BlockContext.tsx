@@ -146,9 +146,10 @@ export const useBlock = () => {
 };
 
 const configDefault = {
-  "subnetId": "string", // The unique identifier of the Subnet where this blockchain will reside.
-  "vmId": "string", // The unique identifier of the Virtual Machine (VM) to be used, e.g., Subnet-EVM.
-  "evmChainId": 12345, // (number) The Chain ID for the EVM, used to prevent replay attacks.
+  "subnetId": "subnet_1735689600000_abc123def", // Mock transaction ID format
+  "subnetOwner": "P-fuji1x7rz8ef5r3qjh0qzx8z9x7rz8ef5r3qjh0qzx8", // P-chain address for subnet owner
+  "vmId": "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy", // The unique identifier of the Virtual Machine (VM) to be used, e.g., Subnet-EVM.
+  "evmChainId": 43114, // (number) The Chain ID for the EVM, used to prevent replay attacks.
   "gasLimit": 8000000, // (number) The maximum amount of gas allowed per block.
   "targetBlockRate": 2, // (number) Desired time (in seconds) between blocks.
   "tokenAllocations": [
@@ -158,33 +159,33 @@ const configDefault = {
     }
   ],
   "feeConfig": {
-    "minBaseFee": "1000000000", // (string) Minimum base fee per gas, in wei.
-    "baseFeeChangeDenominator": 8, // (number) Denominator for base fee adjustment rate.
+    "minBaseFee": "25000000000", // (string) Minimum base fee per gas, in wei.
+    "baseFeeChangeDenominator": 48, // (number) Denominator for base fee adjustment rate.
     "minBlockGasCost": "0", // (string) Minimum gas cost per block, in wei.
-    "maxBlockGasCost": "1000000000", // (string) Maximum gas cost per block, in wei.
-    "blockGasCostStep": "100000000", // (string) Step size for adjusting block gas cost, in wei.
+    "maxBlockGasCost": "1000000", // (string) Maximum gas cost per block, in wei.
+    "blockGasCostStep": "200000", // (string) Step size for adjusting block gas cost, in wei.
     "targetGas": "15000000" // (string) Target gas usage per block.
   },
   "contractDeployerAllowListConfig": {
-    "enabled": true, // (boolean) If true, only specified addresses can deploy contracts.
-    "admins": ["0xAdminAddress1"], // (array of strings) Addresses with admin rights over the allow list.
-    "members": ["0xMemberAddress1"], // (array of strings) Addresses that can manage the allow list.
-    "enabledAddresses": ["0xAllowedDeployer1"] // (array of strings) Addresses permitted to deploy contracts.
+    "enabled": false, // (boolean) If true, only specified addresses can deploy contracts.
+    "admins": [], // (array of strings) Addresses with admin rights over the allow list.
+    "members": [], // (array of strings) Addresses that can manage the allow list.
+    "enabledAddresses": [] // (array of strings) Addresses permitted to deploy contracts.
   },
   "contractNativeMinterConfig": {
-    "enabled": true, // (boolean) If true, enables native token minting.
-    "admins": ["0xAdminAddress2"], // (array of strings) Addresses with admin rights over minting.
-    "members": ["0xMemberAddress2"], // (array of strings) Addresses that can manage minting permissions.
-    "enabledAddresses": ["0xMinterAddress1"] // (array of strings) Addresses permitted to mint native tokens.
+    "enabled": false, // (boolean) If true, enables native token minting.
+    "admins": [], // (array of strings) Addresses with admin rights over minting.
+    "members": [], // (array of strings) Addresses that can manage minting permissions.
+    "enabledAddresses": [] // (array of strings) Addresses permitted to mint native tokens.
   },
   "txAllowListConfig": {
     "enabled": false, // (boolean) If true, only specified addresses can send transactions.
-    "admins": ["0xAdminAddress3"], // (array of strings) Addresses with admin rights over the transaction allow list.
-    "members": ["0xMemberAddress3"], // (array of strings) Addresses that can manage the transaction allow list.
-    "enabledAddresses": ["0xAllowedTxSender1"] // (array of strings) Addresses permitted to send transactions.
+    "admins": [], // (array of strings) Addresses with admin rights over the transaction allow list.
+    "members": [], // (array of strings) Addresses that can manage the transaction allow list.
+    "enabledAddresses": [] // (array of strings) Addresses permitted to send transactions.
   },
-  "feeManagerEnabled": true, // (boolean) If true, enables dynamic fee management.
-  "feeManagerAdmins": ["0xFeeManagerAdmin1"], // (array of strings) Addresses with admin rights over fee management.
-  "rewardManagerEnabled": true, // (boolean) If true, enables reward distribution to validators.
-  "rewardManagerAdmins": ["0xRewardManagerAdmin1"] // (array of strings) Addresses with admin rights over reward management.
+  "feeManagerEnabled": false, // (boolean) If true, enables dynamic fee management.
+  "feeManagerAdmins": [], // (array of strings) Addresses with admin rights over fee management.
+  "rewardManagerEnabled": false, // (boolean) If true, enables reward distribution to validators.
+  "rewardManagerAdmins": [] // (array of strings) Addresses with admin rights over reward management.
 }
