@@ -9,7 +9,7 @@ interface ControlPanelProps {
 }
 
 export default function ControlPanel({ progress, onProgressUpdate }: ControlPanelProps) {
-  const { currentSubStepIndex, totalSubSteps, steps, currentStepIndex, canGoPrevious, canGoNext, previousStep, nextStep } = useSteps();
+  const { steps, currentStepIndex, canGoPrevious, canGoNext, previousStep, nextStep } = useSteps();
 
   const currentStep = steps[currentStepIndex];
 

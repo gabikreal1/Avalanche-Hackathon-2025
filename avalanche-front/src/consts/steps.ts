@@ -95,7 +95,7 @@ export const steps: Step[] = [
               type: BlockType.INPUT,
               heading: "Amount",
               placeholder: "10000",
-              key: "amount",
+              key: "tokenAllocations",
             },
           ]
         },

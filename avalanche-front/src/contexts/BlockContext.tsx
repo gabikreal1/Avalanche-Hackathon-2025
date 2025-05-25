@@ -7,6 +7,7 @@ interface BlockContextType {
   setBlockValue: (key: string, value: any) => void;
   getBlockValue: (key: string) => any;
   clearAllData: () => void;
+  setManyBlockValues: (values: Record<string, string>) => void;
 }
 
 const BlockContext = createContext<BlockContextType | undefined>(undefined);
@@ -25,6 +26,14 @@ export const BlockProvider = ({ children }: BlockProviderProps) => {
     }));
   };
 
+  const setManyBlockValues = (values: Record<string, string>) => {
+
+    setFormData(prev => ({
+      ...prev,
+      ...values
+    }));
+  };
+
   const getBlockValue = (key: string) => {
     return formData[key];
   };
@@ -37,7 +46,8 @@ export const BlockProvider = ({ children }: BlockProviderProps) => {
     formData,
     setBlockValue,
     getBlockValue,
-    clearAllData
+    clearAllData,
+    setManyBlockValues
   };
 
   return (
