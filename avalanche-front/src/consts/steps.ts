@@ -81,6 +81,20 @@ export const steps: Step[] = [
               type: BlockType.RADIO,
               options: ["Anyone can deploy contracts.", "Only approved addresses can deploy contracts."],
               key: "permissions",
+              subfields: [
+                {
+                  name: "Admin Addresses",
+                  fields: []
+                },
+                {
+                  name: "Manager Addresses",
+                  fields: []
+                },
+                {
+                  name: "Enabled Addresses",
+                  fields: []
+                }
+              ]
             },
           ]
         },

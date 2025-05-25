@@ -19,6 +19,10 @@ export interface RadioBlock {
   description?: string;
   canAskAI?: boolean;
   key: string;
+  subfields?: {
+    name: string,
+    fields: []
+  }[],
 }
 
 export interface ButtonBlock {

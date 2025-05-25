@@ -47,6 +47,16 @@ export const RadioBlock: React.FC<RadioBlockProps> = ({
           </label>
         ))}
       </div>
+      
+      {selectedOption === block.options[1] && block.subfields && (
+        <div className="mt-4 pl-6 border-l border-gray-600">
+          {block.subfields.map((subfield, index) => (
+            <div key={index} className="mb-3">
+              <h5 className="text-white font-medium mb-2">{subfield.name}</h5>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
