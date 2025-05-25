@@ -4,7 +4,8 @@ import { SubnetConfig, TokenAllocation, FeeConfig, AllowListConfig } from '@/typ
  * Default configuration template that matches the user's required structure
  */
 export const DEFAULT_SUBNET_CONFIG: SubnetConfig = {
-  subnetId: "",
+  subnetId: "subnet_1735689600000_abc123def",
+  subnetOwner: "P-fuji1x7rz8ef5r3qjh0qzx8z9x7rz8ef5r3qjh0qzx8",
   vmId: "srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy",
   evmChainId: 43114,
   gasLimit: 8000000,
@@ -54,6 +55,7 @@ export function restoreSubnetConfig(formData: Record<string, any>): SubnetConfig
   // Map flattened fields to the structured configuration
   // Basic fields
   if (formData.subnetId !== undefined) config.subnetId = String(formData.subnetId);
+  if (formData.subnetOwner !== undefined) config.subnetOwner = String(formData.subnetOwner);
   if (formData.vmId !== undefined) config.vmId = String(formData.vmId);
   if (formData.evmChainId !== undefined) config.evmChainId = Number(formData.evmChainId);
   if (formData.gasLimit !== undefined) config.gasLimit = Number(formData.gasLimit);

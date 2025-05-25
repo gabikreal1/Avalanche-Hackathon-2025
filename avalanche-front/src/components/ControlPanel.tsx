@@ -1,16 +1,13 @@
 'use client';
 
+import { logoSuzaku } from '@/assets/assets';
 import { StepWrapper } from '@/components/steps/StepWrapper';
 import { WalletButton } from '@/components/wallet/WalletButton';
 import { useSteps } from '@/contexts/StepsContext';
 
-interface ControlPanelProps {
-  progress: number;
-  onProgressUpdate?: (newProgress: number) => void;
-}
 
-export default function ControlPanel({ progress, onProgressUpdate }: ControlPanelProps) {
-  const { steps, currentStepIndex, canGoPrevious, canGoNext, previousStep, nextStep } = useSteps();
+export default function ControlPanel() {
+  const { steps, currentStepIndex, totalSteps, canGoPrevious, canGoNext, previousStep, nextStep, changeStepsTo, page } = useSteps();
 
   const currentStep = steps[currentStepIndex];
 
@@ -23,10 +20,24 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
 
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-white mb-2">Trading Steps</h2>
+        <div className='flex text-xl justify-center'>
+            <button 
+            onClick={() => changeStepsTo(0)} 
+            className={`px-3 py-2 rounded-l-lg ${page === 0 ? 'bg-[#ff394a] text-white' : 'bg-black text-gray-300'}`}
+            >
+            Avalanche L1
+            </button>
+            <button 
+            onClick={() => changeStepsTo(1)} 
+            className={`px-2 py-1 flex items-center rounded-r-lg ${page === 1 ? 'bg-[#ff394a] text-white' : 'bg-black text-gray-300'}`}
+            >
+              <p>Suzaku</p>
+              <img className='w-6' src={logoSuzaku.src} alt="" />
+            </button>
+          </div>
         <div className="flex justify-between items-center text-sm text-gray-400">
           <span>Current Steps</span>
-          <span>{currentStepIndex + 1}/{steps.length}</span>
+          <span>{currentStepIndex + 1}/{totalSteps}</span>
         </div>
       </div>
 
@@ -34,7 +45,7 @@ export default function ControlPanel({ progress, onProgressUpdate }: ControlPane
       <div className="w-full bg-gray-700 rounded-full h-2 mb-6">
         <div 
           className="bg-[#ff394a] h-2 rounded-full transition-all duration-300"
-          style={{ width: `${(currentStepIndex + 1) / steps.length * 100}%` }}
+          style={{ width: `${(currentStepIndex + 1) / totalSteps * 100}%` }}
         />
       </div>
 

@@ -14,7 +14,8 @@ export function ConfigurationTest() {
 
   // Sample function to set some test values
   const setTestValues = () => {
-    setBlockValue('subnetId', 'test-subnet-123');
+    setBlockValue('subnetId', 'subnet_1735689600000_abc123def');
+    setBlockValue('subnetOwner', 'P-fuji1x7rz8ef5r3qjh0qzx8z9x7rz8ef5r3qjh0qzx8');
     setBlockValue('vmId', 'srEXiWaHuhNyGwPUi444Tu47ZEDwxTWrbQiuD7FmgSAQ6X7Dy');
     setBlockValue('evmChainId', 43114);
     setBlockValue('gasLimit', 8000000);
