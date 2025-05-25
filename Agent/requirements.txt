@@ -1,0 +1,23 @@
+fol
+# Web server
+fastapi==0.115.7
+uvicorn==0.34.0
+pydantic==2.10.6
+python-multipart==0.0.18
+
+# LangChain components
+langchain==0.3.19
+langchain-core==0.3.61
+langchain-community==0.3.18
+langchain_ollama==0.3.3
+langchain-openai==0.0.2
+
+# Document processing
+unstructured==0.16.17
+markdown==3.7
+
+# Vector database
+chromadb==0.6.2
+
+# Utilities
+pathlib>=1.0.1
