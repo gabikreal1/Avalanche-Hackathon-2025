@@ -2,7 +2,8 @@ function flattenObject(input: Record<string, any>): Record<string, string> {
   const result: Record<string, string> = {};
   
   function flatten(obj: any) {
-    for (const key in obj) {
+    for (const keyA in obj) {
+      const key = keyA.split('.').pop()!; // Replace dots with underscores for keys
       if (obj.hasOwnProperty(key)) {
         const value = obj[key];
         
