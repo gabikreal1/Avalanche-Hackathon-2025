@@ -194,25 +194,6 @@ NEXT_PUBLIC_APP_NAME=Avalanche Subnet Creator
 - Configure Ollama endpoint in `app.py`
 - Adjust embedding model settings as needed
 
-## 🧪 Testing
-
-### Frontend Testing
-```bash
-cd avalanche-front
-npm run test
-```
-
-### Backend Testing
-```bash
-cd Agent
-python -m pytest
-```
-
-### Integration Testing
-- Visit `http://localhost:3000/test` for configuration testing
-- Test chat integration with sample configurations
-- Verify wallet connection and transaction flows
-
 ## 📚 API Documentation
 
 ### Chat Endpoint
