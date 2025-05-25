@@ -1,22 +1,21 @@
-function flattenObject(input: Record<string, any>, prefix: string = ''): Record<string, string> {
+function flattenObject(input: Record<string, any>): Record<string, string> {
   const result: Record<string, string> = {};
   
-  function flatten(obj: any, currentPrefix: string = '') {
+  function flatten(obj: any) {
     for (const key in obj) {
       if (obj.hasOwnProperty(key)) {
         const value = obj[key];
-        const newKey = currentPrefix ? `${currentPrefix}.${key}` : key;
         
         if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-          flatten(value, newKey);
+          flatten(value);
         } else {
-          result[newKey] = String(value);
+          result[key] = String(value);
         }
       }
     }
   }
   
-  flatten(input, prefix);
+  flatten(input);
   return result;
 }
 

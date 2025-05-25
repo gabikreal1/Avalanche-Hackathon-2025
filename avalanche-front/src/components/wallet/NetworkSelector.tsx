@@ -20,7 +20,7 @@ const NETWORKS: Record<number, NetworkInfo> = {
   43113: {
     id: 43113,
     name: 'Avalanche Fuji',
-    color: 'text-orange-600',
+    color: 'text-[#ff394a]',
     bgColor: 'bg-orange-50 border-orange-200'
   }
 };

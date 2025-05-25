@@ -36,7 +36,7 @@ export default function Home() {
                       
                       {/* Chat Area - Right 2/3 */}
                       <div className="w-2/3">
-                        <Chat onProgressUpdate={updateProgress} />
+                        <Chat />
                       </div>
                     </div>
                   </div>

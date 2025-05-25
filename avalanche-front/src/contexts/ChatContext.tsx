@@ -38,7 +38,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState<Tag[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { formData, setManyBlockValues } = useBlock();
+  const { configData, setManyBlockValues } = useBlock();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -67,39 +67,6 @@ export function ChatProvider({ children }: ChatProviderProps) {
   };
 
   // Convert flat formData to nested user_config structure
-  const buildUserConfig = () => {
-    const config: any = {};
-    
-    // Group related fields into nested objects
-    Object.entries(formData).forEach(([key, value]) => {
-      if (key.startsWith('feeConfig.')) {
-        if (!config.feeConfig) config.feeConfig = {};
-        const subKey = key.replace('feeConfig.', '');
-        config.feeConfig[subKey] = value;
-      } else if (key.startsWith('warpConfig.')) {
-        if (!config.warpConfig) config.warpConfig = {};
-        const subKey = key.replace('warpConfig.', '');
-        config.warpConfig[subKey] = value;
-      } else if (key.startsWith('contractDeployerAllowListConfig.')) {
-        if (!config.contractDeployerAllowListConfig) config.contractDeployerAllowListConfig = {};
-        const subKey = key.replace('contractDeployerAllowListConfig.', '');
-        config.contractDeployerAllowListConfig[subKey] = value;
-      } else if (key.startsWith('contractNativeMinterConfig.')) {
-        if (!config.contractNativeMinterConfig) config.contractNativeMinterConfig = {};
-        const subKey = key.replace('contractNativeMinterConfig.', '');
-        config.contractNativeMinterConfig[subKey] = value;
-      } else if (key.startsWith('txAllowListConfig.')) {
-        if (!config.txAllowListConfig) config.txAllowListConfig = {};
-        const subKey = key.replace('txAllowListConfig.', '');
-        config.txAllowListConfig[subKey] = value;
-      } else {
-        config[key] = value;
-      }
-    });
-
-    return config;
-  };
-
   const sendMessage = async (content: string) => {
     if (!content.trim() || isLoading) return;
 
@@ -120,7 +87,7 @@ export function ChatProvider({ children }: ChatProviderProps) {
       // Build the payload according to the API structure
       const payload = {
         chat_history: buildChatHistory(),
-        user_config: buildUserConfig(),
+        user_config: configData,
         question: message
       };
 
@@ -128,8 +95,6 @@ export function ChatProvider({ children }: ChatProviderProps) {
 
       // Send request to the chat endpoint
       const response = await apiClient.post<{ reply: string; update: Record<string, any> }>('/chat', payload);
-
-      console.log('API response:', response);
 
       // Parse and apply the updates to block context
       if (response.update && Object.keys(response.update).length > 0) {

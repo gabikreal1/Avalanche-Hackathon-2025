@@ -30,7 +30,7 @@ export const CheckboxBlock: React.FC<CheckboxBlockProps> = ({
               type="checkbox"
               checked={selectedOptions.includes(option)}
               onChange={(e) => handleOptionChange(option, e.target.checked)}
-              className="w-4 h-4 text-orange-500 bg-gray-800 border-gray-600 rounded focus:ring-orange-500"
+              className="w-4 h-4 text-[#ff394a] bg-gray-800 border-gray-600 rounded focus:ring-[#ff394a]"
             />
             <span className="text-white">{option}</span>
           </label>

@@ -41,7 +41,7 @@ export const RadioBlock: React.FC<RadioBlockProps> = ({
               value={option}
               checked={selectedOption === option}
               onChange={(e) => onChange?.(e.target.value)}
-              className="mr-2 w-4 h-4 text-orange-500 bg-gray-800 border-gray-600 focus:ring-orange-500"
+              className="mr-2 w-4 h-4 text-[#ff394a] bg-gray-800 border-gray-600 focus:ring-[#ff394a]"
             />
             <span className="text-white">{option}</span>
           </label>

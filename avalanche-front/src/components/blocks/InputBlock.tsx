@@ -39,7 +39,7 @@ export const InputBlock: React.FC<InputBlockProps> = ({
   return (
     <div className="mb-4">
       <div className="flex items-center mb-2">
-        <h4 className="text-white font-medium">{block.heading}</h4>
+        <h4 className="text-white text-xl font-medium">{block.heading}</h4>
         <Tooltip
           description={block.description}
           canAskAI={block.canAskAI}
@@ -53,10 +53,10 @@ export const InputBlock: React.FC<InputBlockProps> = ({
         placeholder={block.placeholder}
         value={value}
         onChange={(e) => onChange?.(e.target.value)}
-        className={`w-full px-3 py-2 bg-gray-800 border rounded-lg text-white placeholder-gray-400 focus:outline-none transition-colors ${
+        className={`w-full px-3 py-2 bg-gray-800 text-lg border rounded-lg text-white placeholder-gray-400 focus:outline-none transition-colors ${
           isSubnetOwnerField && isConnected && address === value
             ? 'border-green-500 focus:border-green-400'
-            : 'border-gray-600 focus:border-orange-500'
+            : 'border-gray-600 focus:border-[#ff394a]'
         }`}
       />
       

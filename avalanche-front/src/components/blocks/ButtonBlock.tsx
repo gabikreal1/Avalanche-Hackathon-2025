@@ -46,7 +46,7 @@ export const ButtonBlock = ({ block, onButtonClick }: ButtonBlockProps) => {
       return 'bg-red-500 hover:bg-red-600';
     }
     
-    return 'bg-orange-500 hover:bg-orange-600';
+    return 'bg-[#ff394a] hover:bg-[#ff394a]';
   };
 
   return (

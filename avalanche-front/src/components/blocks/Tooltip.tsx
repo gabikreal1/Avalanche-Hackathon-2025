@@ -40,7 +40,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   return (
     <div className="relative inline-block ml-2">
       <button
-        className="w-4 h-4 rounded-full border border-gray-400 text-gray-400 text-xs flex items-center justify-center hover:border-orange-500 hover:text-orange-500 transition-colors"
+        className="w-4 h-4 rounded-full border border-gray-400 text-gray-400 text-xs flex items-center justify-center hover:border-[#ff394a] hover:text-[#ff394a] transition-colors"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -60,7 +60,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
             <div className="flex justify-end">
               <button
                 onClick={handleAskAI}
-                className="px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white text-xs rounded transition-colors"
+                className="px-3 py-1 bg-[#ff394a] hover:bg-[#ff394a] text-white text-xs rounded transition-colors"
               >
                 Ask AI
               </button>
