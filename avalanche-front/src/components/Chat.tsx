@@ -36,17 +36,12 @@ export default function Chat() {
   return (
     <div className="flex flex-col h-full bg-black">
       {/* Header */}
-      <div className="p-4">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
-          Trading Assistant
-        </h1>
-      </div>
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-8 space-y-4">
         {messages.length === 0 && (
           <div className="text-center text-gray-500 dark:text-gray-400 mt-8">
-            <h2 className="text-2xl font-semibold mb-4 text-[#ff394a]">Welcome to Trading Academy</h2>
+            <h2 className="text-3xl font-semibold mb-4 text-[#ff394a]">Welcome to Trading Academy</h2>
             <p>Start learning by asking a question or selecting from suggestions below.</p>
           </div>
         )}

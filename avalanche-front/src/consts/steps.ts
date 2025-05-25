@@ -84,15 +84,15 @@ export const steps: Step[] = [
               subfields: [
                 {
                   name: "Admin Addresses",
-                  fields: []
+                  field: "admins" 
                 },
                 {
                   name: "Manager Addresses",
-                  fields: []
+                  field: "members" 
                 },
                 {
                   name: "Enabled Addresses",
-                  fields: []
+                  field: "enabledAddresses"
                 }
               ]
             },
@@ -167,6 +167,60 @@ export const steps: Step[] = [
               heading: "Target Gas",
               placeholder: "15000000",
               key: "targetGas",
+            },
+          ]
+        },
+      ]
+    },
+  ];
+
+
+export const steps2: Step[] = [
+    {
+      substeps: [
+        {
+          name: "Deploy Validator Manager contracts",
+          blocks: [
+            {
+              type: BlockType.CODE,
+              name:"",
+              text: ["git clone git@github.com:suzaku-network/suzaku-deployer.git && suzaku-deployer", "forge install"],
+            },
+            {
+              type: BlockType.CODE,
+              name:"Create the following JSON file at <configs/mySuzakuL1.json>:",
+              text: [
+                "{",
+                ` "proxyAddress": "0x0000000000000000000000000000000000000000",`,
+                ` "validatorManagerOwnerAddress": "0x0000000000000000000000000000000000000000",`,
+                ` "initialSecurityModuleMaxWeight": 0,`,
+                ` "migratedValidations": [],`,
+                ` "l1ID": "0x3cb97014ff27381387d35fbea2522ac5dfb4b5315f77a14fc2900f74e3207b8f",`,
+                ` "churnPeriodSeconds": 3600,`,
+                ` "maximumChurnPercentage": 20`,
+                "}"
+              ],
+            },
+            {
+              type: BlockType.CODE,
+              name:[
+                `<l1ID> is the Chain ID from previous step, in can be converted form CB58 to Hex in the L1 Toolbox.`,
+                `Only <l1ID>, <churnPeriodSeconds> and <maximumChurnPercentage> are used in this step.`],
+              text: [
+                `export PK=0x...`,
+`export FUJI_RPC_URL=https://api.avax-test.network/ext/bc/C/rpc`,
+`export VERIFY_URL=https://api-testnet.snowscan.xyz/api`,
+`export ETHERSCAN_API_KEY=your_snowscan_key...`,
+`forge script script/l1/DeployPoAValidatorManager.s.sol --sig "run(string, uint256, uint256)" configs/mySuzakuL1.json $PK $PK --rpc-url fuji --broadcast --verify $VERIFY_URL --etherscan-api-key $ETHERSCAN_API_KEY`,
+              ],
+            },
+            {
+              type: BlockType.CODE,
+              name:"<--verify> and <etherscan-api-key> can be omitted.",
+              text: [
+                "== Logs ==",
+                " Deployed PoA proxy at: 0xfC39EeA8Bf30de48B0Ff9AB60799CAA555a6e3ab"
+              ],
             },
           ]
         },

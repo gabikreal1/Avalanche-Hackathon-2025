@@ -1,7 +1,8 @@
 export enum BlockType {
   INPUT = 'input',
   RADIO = 'radio',
-  BUTTON = 'button'
+  BUTTON = 'button',
+  CODE = 'code'
 }
 
 export interface InputBlock {
@@ -21,7 +22,7 @@ export interface RadioBlock {
   key: string;
   subfields?: {
     name: string,
-    fields: []
+    field: string
   }[],
 }
 

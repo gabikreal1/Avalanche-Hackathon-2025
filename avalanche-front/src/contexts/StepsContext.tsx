@@ -7,13 +7,21 @@ const StepsContext = createContext<StepsContextType | undefined>(undefined);
 
 interface StepsProviderProps {
   children: ReactNode;
-  steps: Step[];
+  steps: Step[][];
 }
 
 export const StepsProvider: React.FC<StepsProviderProps> = ({ children, steps }) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [currectSteps, setCurrentSteps] = useState(steps[0])
+  const [totalSteps, setTotalSteps] = useState(steps[0].length)
+  const [page, setPage] = useState(0)
 
-  const totalSteps = steps.length;
+  const changeStepsTo = (stepsI: number) => {
+    setCurrentSteps(steps[stepsI])
+    setCurrentStepIndex(0)
+    setTotalSteps(steps[stepsI].length)
+    setPage(stepsI)
+  }
 
   const nextStep = () => {
     if (currentStepIndex < totalSteps - 1) {
@@ -37,14 +45,16 @@ export const StepsProvider: React.FC<StepsProviderProps> = ({ children, steps })
   const canGoPrevious = currentStepIndex > 0;
 
   const contextValue: StepsContextType = {
-    steps,
+    steps: currectSteps,
     currentStepIndex,
     nextStep,
     previousStep,
     goToStep,
     canGoNext,
     canGoPrevious,
-    totalSteps
+    totalSteps,
+    changeStepsTo,
+    page,
   };
 
   return (

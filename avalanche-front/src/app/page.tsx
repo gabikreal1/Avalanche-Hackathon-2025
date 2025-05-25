@@ -2,7 +2,7 @@
 
 import Chat from '@/components/Chat';
 import ControlPanel from '@/components/ControlPanel';
-import { steps } from '@/consts/steps';
+import { steps, steps2 } from '@/consts/steps';
 import { ChatProvider } from '@/contexts/ChatContext';
 import { StepsProvider } from '@/contexts/StepsContext';
 import { useProgress } from '@/hooks/useProgress';
@@ -17,7 +17,6 @@ const queryClient = new QueryClient();
 import { BlockProvider } from '@/contexts/BlockContext';
 
 export default function Home() {
-  const { progress, updateProgress } = useProgress();
 
   return (
     <WagmiProvider config={config}>
@@ -26,12 +25,12 @@ export default function Home() {
           <BlockProvider>
             <ButtonHandlerProvider>
               <ChatProvider>
-                <StepsProvider steps={steps}>
+                <StepsProvider steps={[steps, steps2]}>
                   <div className="min-h-screen">
                     <div className="flex h-screen">
                       {/* Control Panel - Left 1/3 */}
                       <div className="w-1/3">
-                        <ControlPanel progress={progress} onProgressUpdate={updateProgress} />
+                        <ControlPanel/>
                       </div>
                       
                       {/* Chat Area - Right 2/3 */}

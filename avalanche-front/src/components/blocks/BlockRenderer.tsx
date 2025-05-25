@@ -5,6 +5,7 @@ import { Block, BlockType } from '@/types/steps';
 import { InputBlock } from './InputBlock';
 import { RadioBlock } from './RadioBlock';
 import { ButtonBlock } from './ButtonBlock';
+import { CodeBlock } from './CodeBlock';
 
 interface BlockRendererProps {
   block: Block;
@@ -55,6 +56,12 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({
         <ButtonBlock
           block={block}
           onButtonClick={handleButtonAction}
+        />
+      );
+    case BlockType.CODE:
+      return (
+        <CodeBlock
+          block={block}
         />
       );
     default:
